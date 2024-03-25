@@ -6,10 +6,17 @@ class Solution(object):
         :rtype: int
         """
         
-        #nums = [1,3,4,2,2]
-        dic=defaultdict(int)
-        for i in nums:
-            dic[i]+=1
-            if dic[i]>1:
-                return i
+        slow = nums[0]
+        fast = nums[nums[0]]
+
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+        fast = 0
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+
+        return slow
         
