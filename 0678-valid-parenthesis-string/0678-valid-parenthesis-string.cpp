@@ -1,53 +1,32 @@
 class Solution {
 public:
-    bool checkValidString(string s) 
-    {
-        stack<char> st;
-        int ans = 0;
-        for (int i = 0; i < s.size(); i++) 
-        {
-            
-            if (s[i] == '(')
-            {
-                if (st.empty())
-                {
-                    st.push(s[i]);
-                }
-                else{
-                    if(st.top()==')')
-                    {
-                        return false;
-                    }
-                    else{
-                        st.push(s[i]);
-                    }
-                }
-                
-                
-            }
-            else if (s[i] == '*')
-            {
-                ans += 1;
-            }
-            else
-            {
-                if (st.empty())
-                {
-                    st.push(s[i]);
-                }
-                else if (st.top() == '(' and s[i] == ')')
-                {
-                    
-                    st.pop();
+    bool checkValidString(string s) {
+        stack<int> leftStack, starStack;
+
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(') {
+                leftStack.push(i);
+            } else if (s[i] == '*') {
+                starStack.push(i);
+            } else {
+                if (!leftStack.empty()) {
+                    leftStack.pop();
+                } else if (!starStack.empty()) {
+                    starStack.pop();
+                } else {
+                    return false;
                 }
             }
         }
-        if (ans >= st.size() || st.empty())
-        {
-            return true;
+
+        while (!leftStack.empty() && !starStack.empty()) {
+            if (leftStack.top() > starStack.top()) {
+                return false;
+            }
+            leftStack.pop();
+            starStack.pop();
         }
-        else {
-            return false;
-        }   
+
+        return leftStack.empty();
     }
 };
