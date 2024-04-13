@@ -10,6 +10,8 @@ class Solution(object):
             ans[fromm]+=pas
             ans[too]-=pas
         for i in range(1,len(ans)):
+            if ans[i-1]>capacity:
+                return False
             ans[i]+=ans[i-1]
             if ans[i]>capacity:
                 return False
