@@ -1,7 +1,5 @@
-
-
 class Solution:
-    def subarraysDivByK(self, nums, k):
+    def subarraysDivByK(self, nums: List[int], k: int) -> int:
         n = len(nums)
         remainder_count = {}
         count = 0
