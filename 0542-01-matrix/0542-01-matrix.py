@@ -21,7 +21,7 @@ class Solution:
             i, j = q.popleft()
             for dx, dy in directions:
                 x, y = i + dx, j + dy
-                if valid(x, y) and ans[x][y] > ans[i][j] + 1:
+                if valid(x, y) and ans[x][y] >= ans[i][j] + 1:
                     ans[x][y] = ans[i][j] + 1
                     q.append((x, y))
 
