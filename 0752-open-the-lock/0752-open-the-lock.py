@@ -8,20 +8,20 @@ class Solution:
         visited = set('0000')
         
         while queue:
-            current_combination, moves = queue.popleft()
+            key, moves = queue.popleft()
             
-            if current_combination == target:
+            if key == target:
                 return moves
             
             for i in range(4):
                 for delta in [-1, 1]:
-                    new_digit = (int(current_combination[i]) + delta) % 10
-                    new_combination = (
-                        current_combination[:i] + str(new_digit) + current_combination[i+1:]
+                    new_digit = (int(key[i]) + delta) % 10
+                    new_key = (
+                        key[:i] + str(new_digit) + key[i+1:]
                     )
                     
-                    if new_combination not in visited and new_combination not in deadends:
-                        visited.add(new_combination)
-                        queue.append((new_combination, moves + 1))
+                    if new_key not in visited and new_key not in deadends:
+                        visited.add(new_key)
+                        queue.append((new_key, moves + 1))
         
         return -1
