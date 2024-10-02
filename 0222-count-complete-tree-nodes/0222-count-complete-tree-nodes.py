@@ -7,18 +7,24 @@
 
 class Solution:
     def countNodes(self, root: Optional[TreeNode]) -> int:
-        
-        if not root:
+        if not root :
             return 0
-        node_count = 0
-        
+        arr=[]
         def dfs(node):
-            nonlocal node_count
             if not node:
-                return
-            node_count += 1
+                return 
+            arr.append(node.val)    
             dfs(node.left)
-            dfs(node.right)
+            dfs(node.right)    
+
         dfs(root)
-        
-        return node_count
+        arr.sort()
+        left, right = 0, len(arr) - 1
+        while left < right:
+            mid = (left + right) // 2
+            if arr[mid] :
+                left = mid + 1
+            else:
+                right = mid
+
+        return left+1
