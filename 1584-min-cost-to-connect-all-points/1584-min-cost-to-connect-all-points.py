@@ -1,26 +1,30 @@
+def manhattan_distance(p1: List[int], p2: List[int]) -> int:
+    return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        n=len(points)
-        adj={ i : [] for i in range (n)}
-       
-        for i in range(n):
-            x1,y1=points[i]
-            for j in range(n):
-                x2,y2=points[j]
-                dis=abs(x1-x2)+abs(y1-y2)
-                adj[i].append([dis,j])
-                adj[j].append([dis,i])
-        res=0
-        st=set()
-        minheap=[[0,0]]
-        while len(st)!=n:
-            cost,i=heapq.heappop(minheap)
-            if i in st:
+        n = len(points)
+        visited = [False] * n
+        heap_dict = {0: 0}  
+        min_heap = [(0, 0)]
+        
+        mst_weight = 0
+        
+        while min_heap:
+            w, u = heappop(min_heap)
+            
+            if visited[u] or heap_dict.get(u, float('inf')) < w:
                 continue
-            res+=cost
-            st.add(i)   
-            for cost,neigh in adj[i]:
-                if neigh not in st:
-                    heapq.heappush(minheap,[cost,neigh])
-        return res             
-
+            
+            visited[u] = True
+            mst_weight += w
+            
+            for v in range(n):
+                if not visited[v]:
+                    new_distance = manhattan_distance(points[u], points[v])
+      
+                    if new_distance < heap_dict.get(v, float('inf')):
+                        heap_dict[v] = new_distance
+                        heappush(min_heap, (new_distance, v))
+        
+        return mst_weight
