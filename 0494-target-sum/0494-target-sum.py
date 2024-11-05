@@ -1,13 +1,17 @@
+from typing import List
+
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        memo = {}
-        ans=0
-        def solve(index,summ):
-            if index==len(nums):
-                return 1 if summ==target else 0
-            if (index,summ) in memo:
-                return memo[(index,summ)]
-            memo[(index,summ)]=solve(index+1,summ+nums[index])+solve(index+1,summ-nums[index])
-            return memo[(index,summ)]
+        total_sum = sum(nums)
+        if (total_sum + target) % 2 != 0 or abs(target) > total_sum:
+            return 0
+        
+        subset_sum = (total_sum + target) // 2
+        dp = [0] * (subset_sum + 1)
+        dp[0] = 1  
 
-        return solve(0,0)
+        for num in nums:
+            for j in range(subset_sum, num - 1, -1):
+                dp[j] += dp[j - num]
+
+        return dp[subset_sum]
