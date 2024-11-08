@@ -3,7 +3,7 @@ from functools import lru_cache
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
         n, m = len(word1), len(word2)
-        @lru_cache(None)
+        @cache
         def dp(p1, p2):
             if p1 == n:  
                 return m - p2
