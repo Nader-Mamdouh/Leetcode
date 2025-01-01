@@ -1,18 +1,13 @@
 class Solution:
     def maxScore(self, s: str) -> int:
-        def solve(x):
-            no1=0
-            no0=0
-            for i in range(x):
-                if s[i]=='0':
-                    no0+=1
-            for i in range(x,len(s)):
-                if s[i]=='1':
-                    no1+=1   
-            return no0+no1             
-        n=len(s)
+        no1=s.count("1")
         mx=0
-        for i in range(1,n):
-            mx=max(mx,solve(i))
-        return mx    
-        
+        left0=0
+        right1=no1
+        for i in range(len(s)-1):
+            if s[i] =="0":
+                left0+=1
+            else:
+                right1-=1
+            mx=max(mx,left0+right1)
+        return mx            
